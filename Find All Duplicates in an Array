@@ -1,0 +1,13 @@
+class Solution {
+public:
+    vector<int> findDuplicates(vector<int>& nums) {
+        vector<int> result;
+        sort(nums.begin(),nums.end());
+        for(vector<int>::iterator it = nums.begin(); it != nums.end() - 1; ++it){
+            if(*it == *(it + 1)){
+                result.push_back(*it);
+            }
+        }
+        return result;
+    }
+};
