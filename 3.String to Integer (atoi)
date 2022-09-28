@@ -1,0 +1,47 @@
+class Solution {
+public:
+int myAtoi(string s) {
+        int size = s.size();
+        string number = "";
+        for(int i = 0; i < size; ++i){
+            if((s[i] >= 48 && s[i] <= 57) || (s[i] == '-' && i != size - 1 && (s[i + 1] >= 48 && s[i + 1] <= 57))){
+                number += s[i];
+            }
+            else if(s[i] != ' ' && s[i] != '+'){
+                break;
+            }
+            else if (s[i] == '+' && i != size - 1 && !(s[i + 1] >= 48 && s[i + 1] <= 57)){
+                break;
+            }
+        }
+        int num = 0;
+        int number_size = number.size();
+        if(number[0] == '-') {
+            float digit_index = 1;
+            for(int i = number_size - 1; i > 0; --i){
+                char digit = number[i];
+                if(num + digit_index * (digit - 48) > 2147483647){
+                    num = 2147483647;
+                    return (-1) * num - 1; 
+                }
+                num += digit_index * (digit - 48);
+                digit_index *= 10;
+            }
+            return (-1) * num;
+        }
+        else {
+            float digit_index = 1;
+            for(int i = number_size - 1; i >= 0; --i){
+                char digit = number[i];
+                if(num + digit_index * (digit - 48) > 2147483647){
+                    num = 2147483647;
+                    break;
+                }
+                num += digit_index * (digit - 48);
+                digit_index *= 10;
+            }
+            return num;
+        }
+    }
+
+};
