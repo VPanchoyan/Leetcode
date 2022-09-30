@@ -1,0 +1,25 @@
+string solution(string inputString) {
+    stack<char> braces;
+    string res = "";
+    for(int i = 0; i < inputString.size(); ++i){
+        if(inputString[i] == '(') braces.push(i);
+    }
+    int i = 0;
+    while(i < 50){
+        if(braces.empty()) break;
+        int index1 = braces.top();
+        int index2 = index1;
+        for(;inputString[index2] != ')'; ++index2);
+        inputString.erase(index2--,1);
+        inputString.erase(index1,1);
+        for(int j = 0; j < (index2 - index1)/2;++j) {
+            swap(inputString[index1 + j],inputString[index2 - j - 1]);
+        }
+        braces.pop();
+        ++i;
+    }
+    for(int i = 0; i < inputString.size();++i){
+        if(inputString[i] != ')' && inputString[i] != '(') res += inputString[i];
+    }
+    return res;
+}
