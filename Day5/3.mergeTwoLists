@@ -1,0 +1,32 @@
+ListNode<int> * solution(ListNode<int> * l1, ListNode<int> * l2) {
+    ListNode<int>* p = l1;
+    ListNode<int>* startl2 = nullptr;
+    while(p){
+        p = p->next;
+        if(!p->next) startl2 = p;
+    }
+    p = l2;
+    ListNode<int>* startl1 = l1;
+    while(p){
+        if(p->value < startl1->value){
+            if(startl1 == l1){
+                ListNode<int>* first = new ListNode<int>;
+                first->value = p->value;
+                first->next = l1;
+                l1 = first;
+                ListNode<int>* temp = startl2->next->next;
+                startl2->next->next = nullptr;
+                startl2->next = temp;
+                p = startl2->next;
+                startl1 = l1;
+            }
+            else{
+                
+            }
+        }
+        else{
+            startl1 = startl1->next;
+        }
+    }
+    return l1;
+}
