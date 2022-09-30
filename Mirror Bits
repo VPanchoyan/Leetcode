@@ -1,0 +1,10 @@
+int solution(int a) {
+    int result = 0;
+    while(a){
+        result <<= 1;
+        bool bit = a & 1;
+        result += bit;
+        a >>= 1;
+    }
+    return result; 
+}
