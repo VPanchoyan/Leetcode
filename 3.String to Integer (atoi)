@@ -1,47 +1,31 @@
 class Solution {
 public:
-int myAtoi(string s) {
-        int size = s.size();
-        string number = "";
-        for(int i = 0; i < size; ++i){
-            if((s[i] >= 48 && s[i] <= 57) || (s[i] == '-' && i != size - 1 && (s[i + 1] >= 48 && s[i + 1] <= 57))){
-                number += s[i];
+    int myAtoi(string s) {
+        int number = 0;
+        bool sign = false;
+        string help = "";
+        bool started = false;
+        for(int i = 0; i < 200; ++i){
+            if(s[i] == ' ' && !started){}
+            else if(s[i] == '+' && !started && (s[i + 1] >= '0' && s[i + 1] <= '9')){}
+            else if(s[i] == '-' && !started && (s[i + 1] >= '0' && s[i + 1] <= '9')){ sign = true;}
+            else if(s[i] >= '0' && s[i] <= '9') {
+                help += s[i];
+                started = true;
             }
-            else if(s[i] != ' ' && s[i] != '+'){
-                break;
+            else break;
+        }
+        int size = help.size();
+        for(double i = size - 1, j = 1; i >= 0; --i){
+            if(number + j * (help[i] - 48) < 2147483648){
+                number += j * (help[i] - 48);
+                j *= 10;
             }
-            else if (s[i] == '+' && i != size - 1 && !(s[i + 1] >= 48 && s[i + 1] <= 57)){
-                break;
+            else {
+                (!sign) ? number = 2147483647 : number = -2147483648;
+                return number;
             }
         }
-        int num = 0;
-        int number_size = number.size();
-        if(number[0] == '-') {
-            float digit_index = 1;
-            for(int i = number_size - 1; i > 0; --i){
-                char digit = number[i];
-                if(num + digit_index * (digit - 48) > 2147483647){
-                    num = 2147483647;
-                    return (-1) * num - 1; 
-                }
-                num += digit_index * (digit - 48);
-                digit_index *= 10;
-            }
-            return (-1) * num;
-        }
-        else {
-            float digit_index = 1;
-            for(int i = number_size - 1; i >= 0; --i){
-                char digit = number[i];
-                if(num + digit_index * (digit - 48) > 2147483647){
-                    num = 2147483647;
-                    break;
-                }
-                num += digit_index * (digit - 48);
-                digit_index *= 10;
-            }
-            return num;
-        }
+        return (!sign) ? number : -1 * number;
     }
-
 };
