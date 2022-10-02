@@ -1,0 +1,27 @@
+#include <map>
+class Solution {
+public:
+    vector<int> sortByBits(vector<int>& arr) {
+        vector<int> result;
+        multimap<int,int> ones_counts;
+        int size = arr.size();
+        sort(arr.begin(),arr.end());
+        for(int i = 0; i < 501; ++i){
+            bool bit = false;
+            int temp = arr[i];
+            int ones_count = 0;
+            while(temp){
+                bit = temp & 1;
+                if(bit) ++ones_count;
+                temp >>= 1;
+            }
+            ones_counts.insert(pair<int,int>(ones_count,arr[i]));
+            if(i + 1 == size) break;
+        }
+        int setsize = 0;
+        for(auto it = ones_counts.begin(); it != ones_counts.end();++it){
+            result.push_back(it->second);
+        }
+        return result;
+    }
+};
