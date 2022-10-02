@@ -1,0 +1,39 @@
+class Solution {
+public:
+    ListNode* insertionSortList(ListNode* head) {
+        ListNode* sorted = new ListNode(head->val);
+        head = head->next;
+        while(head){
+            ListNode* p = sorted;
+            ListNode* prev = nullptr;
+            while(p){
+                if(head->val <= p->val){
+                    if(p == sorted){
+                        ListNode* newnode = new ListNode(head->val);
+                        newnode->next = sorted;
+                        sorted = newnode;
+                        head = head->next;
+                    }
+                    else{
+                        ListNode* newnode = new ListNode(head->val);
+                        newnode->next = prev->next;
+                        prev->next = newnode;
+                        head = head->next;
+                    }
+                    break;
+                }
+                else{
+                    if(!p->next){
+                        ListNode* newnode = new ListNode(head->val);
+                        p->next = newnode;
+                        head = head->next;
+                        break;
+                    }
+                    prev = p;
+                    p = p->next;
+                }
+            }
+        }
+        return sorted;
+    }
+};
