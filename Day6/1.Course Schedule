@@ -1,0 +1,26 @@
+#include <map>
+#include <set>
+class Solution {
+public:
+    bool canFinish(int numCourses, vector<vector<int>>& prerequisites) {
+        multimap<int,int> chain;
+        for(int i = 0; i < prerequisites.size(); ++i){
+            chain.insert(pair<int,int>(prerequisites[i][0],prerequisites[i][1]));
+        }
+        auto it = chain.begin();
+        while(it != chain.end()){
+            set<int> taken;
+            taken.insert(it->first);
+            auto iter = chain.find(it->second);
+            while(iter != chain.end()){
+                if(taken.count(iter->second)) return false;
+                if(iter->second == it->first) return false;
+                taken.insert(iter->first);
+                iter = chain.find(iter->second);
+            }
+            ++it;
+        }
+        
+        return true;
+    }
+};
