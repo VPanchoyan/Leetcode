@@ -1,0 +1,14 @@
+#include <set>
+class Solution {
+public:
+    void merge(vector<int>& nums1, int m, vector<int>& nums2, int n) {
+        multiset<int> helper(nums1.begin(),nums1.begin() + m);
+        for(auto i = nums2.begin(); i != nums2.end(); ++i){
+            helper.insert(*i);
+        }
+        nums1.clear();
+        for(auto i = helper.begin(); i != helper.end(); ++i){
+            nums1.push_back(*i);
+        }
+    }
+};
